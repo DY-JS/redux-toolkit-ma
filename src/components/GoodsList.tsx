@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
+import { useAppSelector } from '../app/hooks';
+import { useDispatch } from 'react-redux';
+import { actions as goodActions } from '../features/goods';
 
 export const GoodsList = () => {
   const [newGood, setNewGood] = useState('');
-  const [goods, setGoods] = useState<string[]>(['Apple', 'Banana', 'Coconut']);
+  // const [goods, setGoods] = useState<string[]>(['Apple', 'Banana', 'Coconut']);
+  const dispatch = useDispatch();
+  const goods = useAppSelector(state => state.goods);
+  
+  const addGood = (goodToAdd: string) => dispatch(goodActions.add(goodToAdd))
 
-  const addGood = (goodToAdd: string) => {
-    setGoods(current => [...current, goodToAdd]);
-  }
-
-  const removeGood = (goodToRemove: string) => {
-    setGoods(current => current.filter(
-      good => good !== goodToRemove,
-    ));
-  };
+  const removeGood = (goodToRemove: string) => dispatch(goodActions.take(goodToRemove));
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -51,5 +50,6 @@ export const GoodsList = () => {
         ))}
       </ul>
     </section>
-  );
-};
+  )
+}
+
