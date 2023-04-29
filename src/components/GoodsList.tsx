@@ -52,7 +52,7 @@ export const GoodsList = () => {
   }
   
   if (error) {
-    return (<p>Error...</p>)
+    return (<p>{error}</p>)
   }
   return (
     <section className="goods">
