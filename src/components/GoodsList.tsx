@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAppSelector } from '../app/hooks';
 import { useDispatch } from 'react-redux';
-import { actions as goodActions } from '../features/goods';
-
-  // function wait(delay: number) {
-  // return new Promise((resolve) => setTimeout(resolve, delay));
-  // }
+//import { actions as goodActions } from '../features/goods';
+import  * as goodActions from '../features/goods';
 
 export const GoodsList = () => {
   const [newGood, setNewGood] = useState('');
@@ -27,28 +24,35 @@ export const GoodsList = () => {
   };
   
 
-  useEffect(() => {
-  const fetchData = async () => {
-    try { 
-      dispatch(goodActions.setLoading(true))
-      const res = await fetch('https://jsonplaceholder.typicode.com/user')
-      const json = await res.json()
-      const goods: string[] = json.map(user => user.name); //к user необходимо сделать interface
-      dispatch(goodActions.set(goods));
-    } catch (error) {
-      dispatch(goodActions.setError("error"))
-      console.error(error);
-    } finally {
-    dispatch(goodActions.setLoading(false))
-    }
-  
-  };
+  // useEffect(() => {
+  // const fetchData = async () => {
+  //   try {
+  //     dispatch(goodActions.setLoading(true))
+  //     const res = await fetch('https://jsonplaceholder.typicode.com/users')
+  //     const json = await res.json()
+  //     const goods: string[] = json.map(user => user.name); //к user необходимо сделать interface
+  //     dispatch(goodActions.set(goods));
+  //   } catch (error) {
+  //     dispatch(goodActions.setError("error"))
+  //     console.error(error);
+  //   } finally {
+  //   dispatch(goodActions.setLoading(false))
+  //   }
+  // };
 
-  fetchData();
-  }, []);
+  // fetchData();
+  // }, []);
+  
+  useEffect(() => {
+    dispatch(goodActions.init());
+  }, [])
   
   if (loading) {
     return (<p>Loading...</p>)
+  }
+  
+  if (error) {
+    return (<p>Error...</p>)
   }
   return (
     <section className="goods">
