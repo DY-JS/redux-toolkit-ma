@@ -1,6 +1,5 @@
 // npm i redux @types/redux
 import { configureStore } from '@reduxjs/toolkit';
-import { composeWithDevTools } from 'redux-devtools-extension'; //чтобы пользоваться devTools в хроме
 import amountReducer from '../features/amount';
 import goodsReducer from '../features/goods';
 import positionReducer from '../features/position';

@@ -1,17 +1,35 @@
-import { useState } from 'react';
-import { useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useDispatch } from 'react-redux';
-import { actions as positionActions } from '../features/position';
+import { Dispatch } from 'redux';
+// import { actions as positionActions } from '../features/position';
+import * as positionActions from '../features/position';
+
+// const doACircle = async (dispatch: Dispatch) => { //ф-ция заставляет cделать круг
+//     dispatch(positionActions.moveRight());       //thunk - это ф-ция кот делает неск. д-й с store
+//     await wait(300);                             // по сути thunk - это экшнкриэйтор, кот. можно задиспатчить
+//     dispatch(positionActions.moveDown());
+//     await wait(300);
+//     dispatch(positionActions.moveLeft());
+//     await wait(300);
+//     dispatch(positionActions.moveUp());
+//   }
 
 export const Position = () => {
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { x, y } = useAppSelector(state => state.position);
 
   const moveLeft = () => dispatch(positionActions.moveLeft());
   const moveRight = () => dispatch(positionActions.moveRight());
   const moveUp = () => dispatch(positionActions.moveUp());
-  const moveDown = () => dispatch(positionActions.moveDown());;
-
+  const moveDown = () => dispatch(positionActions.moveDown());
+  
+  // const dance = async () => {
+  //   //doACircle(dispatch); //если принимает dispatch
+  // }
+  
+  const dance = () => dispatch(positionActions.doACircle(500)); //задиспатчили doACircle
+  
   const transformValue = `translate(${x * 100}%, ${y * 100}%)`;
 
   return (
@@ -32,7 +50,7 @@ export const Position = () => {
         </div>
 
         <div className="field">
-          <div className="track" style={{ transform: transformValue }}>
+          <div className="track" style={{ transform: transformValue }} onClick={dance}>
             {x + y}
           </div>
         </div>
@@ -40,3 +58,5 @@ export const Position = () => {
     </section>
   );
 };
+
+
